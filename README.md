@@ -66,7 +66,7 @@ $payment = $invoice->createPayment('ID заказа в вашей системе
 echo($payment->payment_url);
 ```
 
-<h3>Поулчение статуса платежа</h3>
+<h3>Получение статуса платежа</h3>
 
 ```php
 <?php
