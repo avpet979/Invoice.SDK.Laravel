@@ -1,10 +1,10 @@
 {
-    "name": "invoice-llc/payment-laravel",
+    "name": "avpet979/payment-laravel",
     "description": "Invoice Laravel SDK",
     "license": "MIT",
     "require": {
         "php": "^8.0",
-         "laravel/framework": "^10.0"
+         "laravel/framework": ">=10.0"
     },
     "autoload": {
         "psr-4": {
