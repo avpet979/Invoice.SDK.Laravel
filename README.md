@@ -11,9 +11,9 @@ composer require invoice-llc/payment-laravel:dev-master
 ```php
 <?php
 return [
-    "api_key" => "Ваш API ключ",
-    "login" => "логин от личного кабинета Invoice",
-    "default_terminal_name" => "Название терминала"
+    "api_key" => env('INVOICE_API_KEY',"Ваш API ключ"),
+    "login" => env('INVOICE_LOGIN',"логин от личного кабинета Invoice"),
+    "default_terminal_name" => env('INVOICE_TERMINAL_NAME',"Название терминала"),
 ];
 ```
 
@@ -30,8 +30,7 @@ class InvoiceController extends AbstractNotificationController {
 
         function onPay($orderId, $amount)
         {
-    
-            //При успешной оплате
+             //При успешной оплате
         }
     
         function onFail($orderId)
@@ -54,14 +53,16 @@ class InvoiceController extends AbstractNotificationController {
 ```php
 <?php
 
+use \invoice\payment\InvoicePaymentManager;
+
 $invoice = new InvoicePaymentManager();
 
 $items = [
     //Название, цена за 1шт, кол-во, итоговая цена
-    new ITEM('Какой-то предмет',10,1,10)
+    new ITEM('Какой-то предмет', 110 , 2, 220)
 ];
 //ID заказа, цена, товары
-$payment = $invoice->createPayment('ID заказа в вашей системе', 10, $items);
+$payment = $invoice->createPayment('ID заказа в вашей системе', 220, $items);
 
 echo($payment->payment_url);
 ```
