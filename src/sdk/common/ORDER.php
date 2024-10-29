@@ -24,8 +24,14 @@ class ORDER
      * ORDER constructor
      * @param $amount
      */
-    public function __construct($amount)
+    public function __construct($amount, $id)
     {
+        $this->id = $id;
+
+        $this->currency = 'RUB';
+
         $this->amount = $amount;
+
+        $this->description = 'Оплата заказа #'. $this->id;
     }
 }

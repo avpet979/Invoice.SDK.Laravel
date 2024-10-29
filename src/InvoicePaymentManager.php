@@ -11,6 +11,7 @@ use invoice\payment\sdk\CREATE_PAYMENT;
 use invoice\payment\sdk\CREATE_REFUND;
 use invoice\payment\sdk\CREATE_TERMINAL;
 use invoice\payment\sdk\GET_PAYMENT_BY_ORDER;
+use invoice\payment\sdk\GET_TERMINAL;
 use invoice\payment\sdk\RestClient;
 
 class InvoicePaymentManager
@@ -39,8 +40,7 @@ class InvoicePaymentManager
         if($tid == null or empty($tid)) {
             $tid = $this->createTerminal(config("invoice.default_terminal_name"))->id;
         }
-        $order = new ORDER($amount);
-        $order->id = $orderId;
+        $order = new ORDER($amount, $orderId);
 
         $settings = new SETTINGS($tid);
 
@@ -48,6 +48,8 @@ class InvoicePaymentManager
         $settings->success_url = $success_url;
 
         $request = new CREATE_PAYMENT($order, $settings, $receipt);
+
+        dd($request);
 
         $response = $this->restClient->CreatePayment($request);
         if($response == null) throw new \ErrorException("Payment not created!");
@@ -118,7 +120,11 @@ class InvoicePaymentManager
     }
 
     private function getTerminal() {
-        if(!file_exists("invoice_tid")) return null;
-        return file_get_contents("invoice_tid");
+        $request = new GET_TERMINAL(config("invoice.terminal_id"));
+        $response = $this->restClient->GetTerminal($request);
+        if($response['id']);
+        return $response['id'];
+
+        return null;
     }
 }

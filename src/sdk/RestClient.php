@@ -1,6 +1,8 @@
 <?php
 namespace invoice\payment\sdk;
 
+use Illuminate\Support\Facades\Http;
+
 class RestClient
 {
     public $url = "https://api.invoice.su/api/v2/";
@@ -26,6 +28,8 @@ class RestClient
      */
     private function Send($request_type, $json)
     {
+        dump($json);
+
         $request = $this->url . $request_type;
         $auth = base64_encode($this->login . ":" . $this->apiKey);
 
@@ -42,12 +46,16 @@ class RestClient
             "Accept: */*"
         ]);
 
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+        $response = Http::acceptJson()->withHeaders([
+            'Authorization' => 'Basic '.$auth,
+        ])
+            ->post($request, $json);
 
-        $response = curl_exec($ch);
-        curl_close($ch);
-
-        return $response;
+        //curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+        //$response = curl_exec($ch);
+        //curl_close($ch);
+        if ($response->successful())
+            return $response->json();
     }
 
     /**
@@ -56,8 +64,7 @@ class RestClient
      */
     public function GetTerminal(GET_TERMINAL $request)
     {
-        $response = $this->Send("GetTerminal", json_encode(get_object_vars($request)));
-        return json_decode($response);
+        return $this->Send("GetTerminal", get_object_vars($request));
     }
 
     /**
@@ -66,8 +73,7 @@ class RestClient
      */
     public function CreateTerminal(CREATE_TERMINAL $request)
     {
-        $response = $this->Send("CreateTerminal", json_encode(get_object_vars($request)));
-        return json_decode($response);
+        return $this->Send("CreateTerminal", get_object_vars($request));
     }
 
     /**
@@ -76,8 +82,7 @@ class RestClient
      */
     public function GetRefund(GET_REFUND $request)
     {
-        $response = $this->Send("GetRefund", json_encode(get_object_vars($request)));
-        return json_decode($response);
+        return $this->Send("GetRefund", get_object_vars($request));
     }
 
     /**
@@ -86,8 +91,7 @@ class RestClient
      */
     public function CreateRefund(CREATE_REFUND $request)
     {
-        $response = $this->Send("CreateRefund", json_encode(get_object_vars($request)));
-        return json_decode($response);
+        return $this->Send("CreateRefund", get_object_vars($request));
     }
 
     /**
@@ -96,8 +100,7 @@ class RestClient
      */
     public function ClosePayment(CLOSE_PAYMENT $request)
     {
-        $response = $this->Send("ClosePayment", json_encode(get_object_vars($request)));
-        return json_decode($response);
+        return $this->Send("ClosePayment", get_object_vars($request));
     }
 
     /**
@@ -106,8 +109,7 @@ class RestClient
      */
     public function GetPaymentByOrder(GET_PAYMENT_BY_ORDER $request)
     {
-        $response = $this->Send("GetPaymentByOrder", json_encode(get_object_vars($request)));
-        return json_decode($response);
+        return $this->Send("GetPaymentByOrder", get_object_vars($request));
     }
 
     /**
@@ -116,8 +118,7 @@ class RestClient
      */
     public function GetPayment(GET_PAYMENT $request)
     {
-        $response = $this->Send("GetPayment", json_encode(get_object_vars($request)));
-        return json_decode($response);
+        return $this->Send("GetPayment", get_object_vars($request));
     }
 
     /**
@@ -126,7 +127,6 @@ class RestClient
      */
     public function CreatePayment(CREATE_PAYMENT $request)
     {
-        $response = $this->Send("CreatePayment", json_encode(get_object_vars($request)));
-        return json_decode($response);
+        return $this->Send("CreatePayment", get_object_vars($request));
     }
 }
