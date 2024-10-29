@@ -37,7 +37,7 @@ class RestClient
             ->post($request, $json);
 
         if ($response->successful())
-            return $response->json();
+            return $response;
     }
 
     /**

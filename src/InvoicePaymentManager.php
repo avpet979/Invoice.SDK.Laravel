@@ -119,12 +119,14 @@ class InvoicePaymentManager
         file_put_contents("invoice_tid", $id);
     }
 
-    private function getTerminal() {
+    private function getTerminal()
+    {
         $request = new GET_TERMINAL(config("invoice.terminal_id"));
         $response = $this->restClient->GetTerminal($request);
-        if($response['id']);
-        return $response['id'];
-
+        if ($response->successful()) {
+            $data = $response->json();
+            return $data['id'];
+        }
         return null;
     }
 }
