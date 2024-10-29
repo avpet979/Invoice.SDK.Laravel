@@ -28,34 +28,16 @@ class RestClient
      */
     private function Send($request_type, $json)
     {
-        dump($json);
-
         $request = $this->url . $request_type;
         $auth = base64_encode($this->login . ":" . $this->apiKey);
-
-        $ch = curl_init($request);
-        curl_setopt($ch, CURLOPT_URL, $request);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
-
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            "Host: pay.invoice.su",
-            "content-type: application/json",
-            "Authorization: Basic ".$auth,
-            "User-Agent: curl/7.55.1",
-            "Accept: */*"
-        ]);
 
         $response = Http::acceptJson()->withHeaders([
             'Authorization' => 'Basic '.$auth,
         ])
             ->post($request, $json);
 
-        //curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
-        //$response = curl_exec($ch);
-        //curl_close($ch);
         if ($response->successful())
-            return $response->json();
+            return $response;
     }
 
     /**
