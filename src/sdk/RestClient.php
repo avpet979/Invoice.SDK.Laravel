@@ -26,7 +26,7 @@ class RestClient
      * @param $json
      * @return bool|string
      */
-    private function Send($request_type, $json)
+    private function send($request_type, $json)
     {
         $request = $this->url . $request_type;
         $auth = base64_encode($this->login . ":" . $this->apiKey);
@@ -46,7 +46,7 @@ class RestClient
      */
     public function GetTerminal(GET_TERMINAL $request)
     {
-        return $this->Send("GetTerminal", get_object_vars($request));
+        return $this->send("GetTerminal", get_object_vars($request));
     }
 
     /**
@@ -55,7 +55,7 @@ class RestClient
      */
     public function CreateTerminal(CREATE_TERMINAL $request)
     {
-        return $this->Send("CreateTerminal", get_object_vars($request));
+        return $this->send("CreateTerminal", get_object_vars($request));
     }
 
     /**
@@ -64,7 +64,7 @@ class RestClient
      */
     public function GetRefund(GET_REFUND $request)
     {
-        return $this->Send("GetRefund", get_object_vars($request));
+        return $this->send("GetRefund", get_object_vars($request));
     }
 
     /**
@@ -73,7 +73,7 @@ class RestClient
      */
     public function CreateRefund(CREATE_REFUND $request)
     {
-        return $this->Send("CreateRefund", get_object_vars($request));
+        return $this->send("CreateRefund", get_object_vars($request));
     }
 
     /**
@@ -82,7 +82,7 @@ class RestClient
      */
     public function ClosePayment(CLOSE_PAYMENT $request)
     {
-        return $this->Send("ClosePayment", get_object_vars($request));
+        return $this->send("ClosePayment", get_object_vars($request));
     }
 
     /**
@@ -91,7 +91,7 @@ class RestClient
      */
     public function GetPaymentByOrder(GET_PAYMENT_BY_ORDER $request)
     {
-        return $this->Send("GetPaymentByOrder", get_object_vars($request));
+        return $this->send("GetPaymentByOrder", get_object_vars($request));
     }
 
     /**
@@ -100,7 +100,7 @@ class RestClient
      */
     public function GetPayment(GET_PAYMENT $request)
     {
-        return $this->Send("GetPayment", get_object_vars($request));
+        return $this->send("GetPayment", get_object_vars($request));
     }
 
     /**
@@ -109,6 +109,6 @@ class RestClient
      */
     public function CreatePayment(CREATE_PAYMENT $request)
     {
-        return $this->Send("CreatePayment", get_object_vars($request));
+        return $this->send("CreatePayment", get_object_vars($request));
     }
 }
