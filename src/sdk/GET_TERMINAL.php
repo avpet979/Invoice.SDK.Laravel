@@ -11,4 +11,9 @@ class GET_TERMINAL
      * @var string
      */
     public $id;
+
+    public function __construct($id)
+    {
+        $this->id = $id;
+    }
 }
