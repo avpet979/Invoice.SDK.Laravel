@@ -49,11 +49,13 @@ class InvoicePaymentManager
 
         $request = new CREATE_PAYMENT($order, $settings, $receipt);
 
-        dd($request);
+        //dd($request);
 
         $response = $this->restClient->CreatePayment($request);
         if($response == null) throw new \ErrorException("Payment not created!");
-        if(isset($response->error) and $response->error != null) throw new \ErrorException($response->description, $response->error);
+        if($response->failed())
+            $response->throw();
+            //throw new \ErrorException($response->description, $response->error);
 
         return $response;
     }
@@ -113,7 +115,6 @@ class InvoicePaymentManager
 
         return $response;
     }
-
 
     private function saveTerminal($id) {
         file_put_contents("invoice_tid", $id);

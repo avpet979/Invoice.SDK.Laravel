@@ -10,10 +10,12 @@ composer require invoice-llc/payment-laravel:dev-master
 Создайте файл invoice.php в папке **config** со следующим содержанием:
 ```php
 <?php
+
 return [
     "api_key" => env('INVOICE_API_KEY',"Ваш API ключ"),
     "login" => env('INVOICE_LOGIN',"логин от личного кабинета Invoice"),
     "default_terminal_name" => env('INVOICE_TERMINAL_NAME',"Название терминала"),
+    "terminal_id" => env('INVOICE_TERMINAL_ID', "terminal_id"),
 ];
 ```
 
