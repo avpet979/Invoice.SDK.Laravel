@@ -55,7 +55,7 @@ class InvoicePaymentManager
         if($response == null) throw new \ErrorException("Payment not created!");
         if($response->failed())
             $response->throw();
-            throw new \ErrorException($response->description, $response->error);
+            //throw new \ErrorException($response->description, $response->error);
 
         return $response;
     }
@@ -115,7 +115,6 @@ class InvoicePaymentManager
 
         return $response;
     }
-
 
     private function saveTerminal($id) {
         file_put_contents("invoice_tid", $id);
